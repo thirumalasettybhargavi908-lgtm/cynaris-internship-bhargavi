@@ -1,46 +1,38 @@
 import pandas as pd
 import numpy as np
-import sqlite3
+import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
-
-# 1. Automatically create a sample Indian Business Dataset DataFrame
 data = {
-    'order_id': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
-    'customer_name': ['Aarav Sharma', 'Ananya Patel', 'Rohan Gupta', 'Priya Singh', 'Vikram Kumar', 
-                      'Neha Verma', 'Amit Rao', 'Sneha Iyer', 'Rahul Nair', 'Pooja Deshmukh'],
-    'city': ['Bengaluru', 'Mumbai', 'Delhi', 'Bengaluru', 'Chennai', 
-             'Hyderabad', 'Pune', 'Mumbai', 'Bengaluru', 'Delhi'],
-    'category': ['Technology', 'Furniture', 'Technology', 'Office Supplies', 'Technology', 
-                 'Furniture', 'Office Supplies', 'Technology', 'Office Supplies', 'Furniture'],
-    'sales_amount': [12500, 4500, 18000, 3200, 22000, 6700, 1500, 11000, 4800, 9500],
-    'order_status': ['Completed', 'Completed', 'Shipped', 'Cancelled', 'Completed', 
-                     'Completed', 'Shipped', 'Completed', 'Cancelled', 'Completed'],
-    'discount': [0.1, 0.0, 0.2, 0.0, 0.15, 0.05, 0.0, 0.1, None, 0.05]
+    'company_name': ['TechCorp India', 'Bhaarats Retail', 'Ganga Logistics', 'Apex FinTech', 'Mumbai Exports'],
+    'state': ['Karnataka', 'Maharashtra', 'Delhi', 'Karnataka', 'Maharashtra'],
+    'sector': ['Technology', 'Retail', 'Logistics', 'Finance', 'Manufacturing'],
+    'annual_revenue_in_cr': [120.5, 45.0, 89.2, 210.0, 15.4],
+    'employees': [450, 1200, 320, 180, 85],
+    'is_active': [True, True, False, True, True]
 }
 
 df = pd.DataFrame(data)
+print("--- 1. FROM: Full Dataset Preview ---")
+print(df.head(), "\n")
 
-# 2. Load DataFrame into an in-memory SQLite database
-conn = sqlite3.connect(':memory:')
-df.to_sql('sales_data', conn, index=False, if_exists='replace')
+# 2. SELECT: Choose specific columns (like SELECT company_name, sector FROM df)
+print("--- 2. SELECT: Selecting Specific Columns ---")
+selected_columns = df[['company_name', 'sector', 'annual_revenue_in_cr']]
+print(selected_columns.head(), "\n")
 
-print("Dataset loaded successfully into SQLite database!\n")
+# 3. WHERE: Filter rows based on conditions (like WHERE state = 'Karnataka')
+print("--- 3. WHERE: Single Condition Filtering (State = Karnataka) ---")
+karnataka_companies = df[df['state'] == 'Karnataka']
+print(karnataka_companies, "\n")
 
-# 3. Run a sample SQL query (SELECT, FROM, WHERE, AND, IN)
-query = """
-SELECT order_id, customer_name, city, sales_amount 
-FROM sales_data 
-WHERE sales_amount > 5000 
-  AND city IN ('Bengaluru', 'Mumbai', 'Delhi');
-"""
+# 4. WHERE with multiple conditions (AND / OR)
+# Example: Companies in Karnataka AND Revenue > 100 Crore
+print("--- 4. WHERE: Multiple Conditions (State = Karnataka AND Revenue > 100 Cr) ---")
+filtered_companies = df[(df['state'] == 'Karnataka') & (df['annual_revenue_in_cr'] > 100)]
+print(filtered_companies, "\n")
 
-result_df = pd.read_sql_query(query, conn)
-print("Query Results:")
-print(result_df)
-
-# 4. Export result set to CSV (fulfills your practical task requirement)
-result_df.to_csv('filtered_sales_export.csv', index=False)
-print("\nExported result set to filtered_sales_export.csv successfully!")
-
-conn.close()
+# 5. WHERE with .isin() (Equivalent to SQL IN operator)
+print("--- 5. WHERE: IN Operator (Sectors in Technology or Finance) ---")
+tech_finance = df[df['sector'].isin(['Technology', 'Finance'])]
+print(tech_finance)
