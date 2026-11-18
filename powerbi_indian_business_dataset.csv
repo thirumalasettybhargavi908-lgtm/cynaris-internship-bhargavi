@@ -1,0 +1,9 @@
+company_id,company_name,state,sector,annual_revenue_in_cr,employees,customer_rating,report_date
+CMP001,TechCorp India,Karnataka,Technology,150.0,450,4.5,2026-01-15
+CMP002,Bhaarats Retail,Maharashtra,Retail,45.0,1200,3.8,2026-01-15
+CMP003,Ganga Logistics,Delhi,Logistics,90.0,300,4.0,2026-01-15
+CMP004,Apex FinTech,Karnataka,Finance,220.0,180,4.7,2026-01-15
+CMP005,DataSystems,Karnataka,Technology,130.0,320,4.2,2026-02-15
+CMP006,MetroRetail,Maharashtra,Retail,60.0,500,3.5,2026-02-15
+CMP007,Vayu Energy,Gujarat,Energy,180.0,400,4.6,2026-02-15
+CMP008,IndoPharma,Tamil Nadu,Healthcare,110.0,250,4.1,2026-02-15
