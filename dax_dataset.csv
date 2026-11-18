@@ -1,0 +1,6 @@
+company_id,company_name,sector,annual_revenue_in_cr,total_cost_in_cr,transaction_date
+CMP001,TechCorp India,Technology,150.0,100.0,2026-01-10
+CMP002,Bhaarats Retail,Retail,45.0,35.0,2026-01-15
+CMP003,Ganga Logistics,Logistics,90.0,70.0,2026-02-01
+CMP004,Apex FinTech,Finance,220.0,150.0,2026-02-20
+CMP005,DataSystems,Technology,130.0,90.0,2026-03-05
