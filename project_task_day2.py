@@ -1,34 +1,40 @@
-# Week 1, Day 2 - SQL Joins — Combining Tables
-# Project: EDA on Indian Business Dataset
-
 import pandas as pd
-import sqlite3
+import numpy as np
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings('ignore')
 
-# 1. Create sample DataFrames
-df_customers = pd.DataFrame({
-    'customer_id': [1, 2, 3],
-    'customer_name': ['Aarav', 'Ananya', 'Rohan'],
-    'city': ['Bengaluru', 'Mumbai', 'Delhi']
-})
+companies_data = {
+    'company_id': [1, 2, 3, 4],
+    'company_name': ['TechCorp India', 'Bhaarats Retail', 'Ganga Logistics', 'Apex FinTech'],
+    'state': ['Karnataka', 'Maharashtra', 'Delhi', 'Karnataka']
+}
+df_companies = pd.DataFrame(companies_data)
 
-df_orders = pd.DataFrame({
-    'order_id': [101, 102, 103],
-    'customer_id': [1, 2, 1],
-    'sales_amount': [12500, 4500, 18000]
-})
+financials_data = {
+    'company_id': [1, 2, 3, 5],
+    'annual_revenue_in_cr': [120.5, 45.0, 89.2, 55.0],
+    'sector': ['Technology', 'Retail', 'Logistics', 'Manufacturing']
+}
+df_financials = pd.DataFrame(financials_data)
 
-# 2. Load into SQLite database
-conn = sqlite3.connect(':memory:')
-df_customers.to_sql('customers', conn, index=False, if_exists='replace')
-df_orders.to_sql('orders', conn, index=False, if_exists='replace')
+print("--- Base Table 1: Companies ---")
+print(df_companies, "\n")
+print("--- Base Table 2: Financials ---")
+print(df_financials, "\n")
 
-# 3. Run INNER JOIN via Python
-query = """
-SELECT o.order_id, c.customer_name, c.city, o.sales_amount
-FROM orders o
-INNER JOIN customers c ON o.customer_id = c.customer_id;
-"""
+print("--- 2. INNER JOIN ---")
+inner_joined = pd.merge(df_companies, df_financials, on='company_id', how='inner')
+print(inner_joined, "\n")
 
-result_df = pd.read_sql_query(query, conn)
-print(result_df)
-conn.close()
+print("--- 3. LEFT JOIN ---")
+left_joined = pd.merge(df_companies, df_financials, on='company_id', how='left')
+print(left_joined, "\n")
+
+print("--- 4. RIGHT JOIN ---")
+right_joined = pd.merge(df_companies, df_financials, on='company_id', how='right')
+print(right_joined, "\n")
+
+print("--- 5. FULL OUTER JOIN ---")
+outer_joined = pd.merge(df_companies, df_financials, on='company_id', how='outer')
+print(outer_joined)
