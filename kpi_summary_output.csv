@@ -1,0 +1,5 @@
+sector,total_revenue_cr,total_employees,avg_rev_per_emp,company_count
+Finance,220.0,180,1.2222,1
+Logistics,90.0,300,0.3,1
+Retail,105.0,1700,0.07875,2
+Technology,280.0,770,0.36975,2
